@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func getSum(a int, b int) int {
-    carry:=0
+	carry := 0
 	for b != 0 {
 		carry = a & b
 		a = a ^ b
