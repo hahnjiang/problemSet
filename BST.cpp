@@ -11,64 +11,58 @@ struct TreeNode {
 };
 
 class Tree {
-    public:
-        Tree() {
-            root = NULL;
+public:
+    Tree() { root = NULL; }
+    Tree(vector<int> data) {
+        root = NULL;
+        for (int i = 0; i < data.size(); ++i) {
+            insert(data[i]);
         }
-        Tree(vector<int> data) {
-            root = NULL;
-            for (int i=0; i<data.size(); ++i) {
-                insert(data[i]);
-            }
+    }
+    void insert(int val) { root = insert(val, root); }
+    bool find(int val) { return find(val, root); }
+    void preorder() {
+        if (root == NULL) {
+            cout << "NULL" << endl;
+            return;
         }
-        void insert(int val) {
-            root = insert(val, root);
+        preorder(root);
+    }
+    ~Tree() {}
+
+private:
+    TreeNode *root;
+    void preorder(TreeNode *point) {
+        if (point == NULL) {
+            return;
         }
-        bool find(int val) {
-            return find(val, root);
+        cout << point->val << endl;
+        preorder(point->left);
+        preorder(point->right);
+    }
+    bool find(int val, TreeNode *point) {
+        if (point == NULL) {
+            return false;
         }
-        void preorder() {
-            if (root == NULL) {
-                cout << "NULL" << endl;
-                return;
-            }
-            preorder(root);
+        if (val > point->val) {
+            return find(val, point->right);
+        } else if (val < point->val) {
+            return find(val, point->left);
         }
-        ~Tree() {
-        }
-    private:
-        TreeNode *root;
-        void preorder(TreeNode *point) {
-            if (point == NULL) {
-                return;
-            }
-            cout << point->val << endl;
-            preorder(point->left);
-            preorder(point->right);
-        }
-        bool find(int val, TreeNode *point) {
-            if (point == NULL) {
-                return false;
-            }
-            if (val > point->val) {
-                return find(val, point->right);
-            } else if (val < point->val) {
-                return find(val, point->left);
-            }
-            return true;
-        }
-        TreeNode *insert(int val, TreeNode *point) {
-            if (point == NULL) {
-                point = new TreeNode(val);
-                return point;
-            }
-            if (val < point->val) {
-                point->left = insert(val, point->left);
-            } else if (val > point->val) {
-                point->right = insert(val, point->right);
-            }
+        return true;
+    }
+    TreeNode *insert(int val, TreeNode *point) {
+        if (point == NULL) {
+            point = new TreeNode(val);
             return point;
         }
+        if (val < point->val) {
+            point->left = insert(val, point->left);
+        } else if (val > point->val) {
+            point->right = insert(val, point->right);
+        }
+        return point;
+    }
 };
 
 int main() {
