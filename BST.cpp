@@ -21,6 +21,7 @@ public:
     }
     void insert(int val) { root = insert(val, root); }
     bool find(int val) { return find(val, root); }
+    void erase(int val) { return erase(val, root); }
     void preorder() {
         if (root == NULL) {
             cout << "NULL" << endl;
@@ -40,6 +41,7 @@ private:
         preorder(point->left);
         preorder(point->right);
     }
+    bool erase(int val, TreeNode *point) { return false; }
     bool find(int val, TreeNode *point) {
         if (point == NULL) {
             return false;
